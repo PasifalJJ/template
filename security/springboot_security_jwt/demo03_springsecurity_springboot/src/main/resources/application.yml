@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/security_db?useUnicode:true&characterEncoding:utf-8
+    username: root
+    password: root
+  thymeleaf:
+    cache: false
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  resources:
+    static-locations:
+  devtools:
+    restart:
+      log-condition-evaluation-delta: true
+
+logging:
+  level:
+    com.jsc: debug
+#    org: debug
+    org:
+      springframework:
+        security:
+          web: debug
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  userToken: user_jwt_token
+  expiration: 10
+  tokenHead: Bearer
+  route:
+    authentication:
+      path: auth/login
+      refresh: auth/refresh
+      register: auth/register

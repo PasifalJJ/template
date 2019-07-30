@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>chat</title>
+</head>
+<body>
+<div>发送消息：</div>
+<input type="text" id="msgContent"/>
+<input type="button" value="点我发送" onclick="CHAT.chat()"/>
+
+<div>接受消息：</div>
+<div id="receiveMsg" style="background-color: gainsboro;"></div>
+
+<script type="application/javascript">
+
+    window.CHAT = {
+        socket: null,
+        init: function () {
+            if (window.WebSocket) {
+                CHAT.socket = new WebSocket("ws://127.0.0.1:8080/ws");
+                CHAT.socket.onopen = function () {
+                    CHAT.connect();
+                    console.log("连接建立成功。。。");
+                };
+                CHAT.socket.onclose = function () {
+                    console.log("连接建立关闭。。。");
+
+                };
+                CHAT.socket.onerror = function () {
+                    console.log("发生错误。。。");
+                };
+                CHAT.socket.onmessage = function (e) {
+                    console.log("接收到消息。。。" + e.data);
+                    var receiveMsg = document.getElementById("receiveMsg");
+                    var parse = JSON.parse(e.data);
+                    var html = receiveMsg.innerHTML;
+                    receiveMsg.innerHTML = html + "<br/>" + parse.chatMsg.msg;
+                };
+            } else {
+                alert("浏览器不支持websocket协议。。。");
+            }
+        },
+
+        dataContent: {
+            action: 0,
+            extend: "",
+            chatMsg: {
+                msg: "",
+                senderId: "7777",
+                receiveId: "2333",
+                statue: ""
+            }
+        },
+        connect: function () {
+            CHAT.dataContent.action = 1;
+            console.log(CHAT.dataContent);
+            var s = JSON.stringify(CHAT.dataContent)
+            console.log(s);
+            CHAT.socket.send(s);
+        },
+        chat: function () {
+            var msg = document.getElementById("msgContent");
+            CHAT.dataContent.action = 2;
+            CHAT.dataContent.chatMsg.msg = msg.value;
+            msg = JSON.stringify(CHAT.dataContent);
+            console.log(msg);
+            CHAT.socket.send(msg);
+        }
+    }
+
+    CHAT.init();
+
+</script>
+</body>
+
+</html>

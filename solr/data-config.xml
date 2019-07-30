@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<dataConfig>   
+<dataSource type="JdbcDataSource"   
+		  driver="com.mysql.jdbc.Driver"   
+		  url="jdbc:mysql://192.168.25.128:3306/pinyougoudb"   
+		  user="root"   
+		  password="root"/>
+	<document>   
+		<entity name="product" query="select id, goods_id,title,price,image,category,seller_id,brand,update_time from tb_item where status='1' ">
+				 <field column="id" name="id"/>
+                 <field column="goods_id" name="item_goodsid"/> 
+				 <field column="title" name="item_title"/> 
+				 <field column="price" name="item_price"/> 
+				 <field column="image" name="item_image"/> 
+				 <field column="category" name="item_category"/> 
+				 <field column="seller_id" name="item_seller"/> 
+				 <field column="brand" name="item_brand"/> 
+                                 <field column="update_time" name="item_updatetime"/> 
+                </entity>			 
+	</document>
+</dataConfig>

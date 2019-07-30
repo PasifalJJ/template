@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.mapper.TbBrandMapper">
+
+    <resultMap id="mybrand" type="com.itheima.pojo.TbBrand">
+        <id column="id" property="id"></id>
+        <result column="name" property="myname"></result>
+        <result column="first_char" property="first_char"></result>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" resultMap="mybrand" parameterType="java.lang.Long">
+        select
+           id, name, first_char
+        from tb_brand
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="example" version="1.5">
+ 
+    <field name="_version_" type="long" indexed="true" stored="true"/>
+    <field name="_root_" type="string" indexed="true" stored="false"/>
+    <field name="id" type="long" indexed="true" stored="true" required="true" multiValued="false" />         
+
+
+    <field name="item_goodsid" type="long" indexed="true" stored="true"/>
+    <field name="item_title" type="text_ik" indexed="true" stored="true"/>
+    <field name="item_price" type="double" indexed="true" stored="true"/>
+    <field name="item_image" type="string" indexed="false" stored="true" />
+    <field name="item_category" type="string" indexed="true" stored="true" />
+    <field name="item_seller" type="text_ik" indexed="true" stored="true" />
+    <field name="item_brand" type="string" indexed="true" stored="true" />
+    <field name="item_updatetime" type="date" indexed="false" stored="true"/>
+    <field  name="item_keywords"  type="text_ik"  indexed="true"  stored="false" multiValued="true"/>
+    <copyField source="item_title" dest="item_keywords"/>
+    <copyField source="item_category" dest="item_keywords"/>
+    <copyField source="item_seller" dest="item_keywords"/>
+    <copyField source="item_brand" dest="item_keywords"/>
+    
+    <dynamicField name="item_spec_*" type="string" indexed="true" stored="true" />
+     
+    <uniqueKey>id</uniqueKey>
+
+    <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+
+    <fieldType name="text_ik" class="solr.TextField">
+      <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"/>
+    </fieldType>
+
+</schema>
